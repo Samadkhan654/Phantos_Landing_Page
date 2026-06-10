@@ -1,0 +1,6 @@
+{
+  "name": "Phantos AI Landing Page",
+  "description": "A dark, cinematic landing page for Phantos AI, an AI agent that self-improves using Gemini 2.0 Flash and Arize Phoenix.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
