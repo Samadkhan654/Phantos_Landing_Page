@@ -2,7 +2,7 @@ import * as React from 'react';
 import { motion } from 'motion/react';
 import { useEffect, useState, useRef } from 'react';
 import phantosDashboard from '../assets/images/phantos_dashboard_1780567603876.png';
-import { Play, Pause, Volume2, Maximize, RotateCcw, AlertTriangle, ShieldCheck, Cpu, Code, Activity, HelpCircle } from 'lucide-react';
+import { Play, Pause, Volume2, Maximize, RotateCcw, AlertTriangle, ShieldCheck, Cpu, Code, Activity, HelpCircle, Terminal, Layers, Gauge, Database } from 'lucide-react';
 
 const STEPS = [
   { icon: "💬", text: "Agent answers customer question using Gemini 2.0 Flash" },
@@ -244,122 +244,24 @@ export function LiveDemo() {
   );
 }
 
-const CHAPTERS = [
-  {
-    id: 1,
-    title: "1. Baseline Fault Execution",
-    duration: 6,
-    sub: "Failing silently with static guidelines",
-    timestamp: "0:00",
-    start: 0,
-    end: 6
-  },
-  {
-    id: 2,
-    title: "2. OpenTelemetry & Trace Capture",
-    duration: 6,
-    sub: "Collecting nested execution tracks",
-    timestamp: "0:06",
-    start: 6,
-    end: 12
-  },
-  {
-    id: 3,
-    title: "3. Phoenix Evaluator & Judge",
-    duration: 6,
-    sub: "Discovering cognitive policy drift",
-    timestamp: "0:12",
-    start: 12,
-    end: 18
-  },
-  {
-    id: 4,
-    title: "4. Autonomous Improvement",
-    duration: 6,
-    sub: "Injecting precision corrective regulations",
-    timestamp: "0:18",
-    start: 18,
-    end: 24
-  }
-];
-
 export function DemoVideoSection() {
-  const [activeTab, setActiveTab] = useState<'video' | 'simulation'>('video');
   const [hasPlayedVideo, setHasPlayedVideo] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [isMuted, setIsMuted] = useState(false);
-
-  useEffect(() => {
-    if (activeTab !== 'simulation' || !isPlaying) return;
-    const interval = setInterval(() => {
-      setCurrentTime((prev) => {
-        const next = prev + 0.1;
-        return next >= 24 ? 0 : parseFloat(next.toFixed(1));
-      });
-    }, 100);
-    return () => clearInterval(interval);
-  }, [isPlaying, activeTab]);
-
-  const activeChapterIndex = Math.min(Math.floor(currentTime / 6), CHAPTERS.length - 1);
-  const activeChapter = CHAPTERS[activeChapterIndex];
-
-  const formatTime = (time: number) => {
-    const min = Math.floor(time / 60);
-    const sec = Math.floor(time % 60);
-    return `${min}:${sec.toString().padStart(2, '0')}`;
-  };
-
-  const handleProgressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCurrentTime(parseFloat(e.target.value));
-  };
-
-  const selectChapter = (start: number) => {
-    setCurrentTime(start);
-    setIsPlaying(true);
-  };
 
   return (
     <section id="demo-video" className="py-24 relative overflow-hidden border-t border-border-dark">
       <div className="absolute inset-0 bg-brand-secondary/5 blur-[120px] pointer-events-none" />
       
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-10">
-          <span className="text-brand-primary text-sm font-bold tracking-widest uppercase mb-4 block">Simulation & Video Demo</span>
+        <div className="text-center mb-12">
+          <span className="text-brand-primary text-sm font-bold tracking-widest uppercase mb-4 block">DEMO VIDEO</span>
           <h2 className="text-4xl font-bold mb-4">Watch How Phantos AI Works</h2>
           <p className="max-w-xl mx-auto text-lg text-text-secondary">
-            See our nested tracing layers, OpenTelemetry spans, and auto-corrective loops in action via a video walkthrough or interactive replay.
+            See our nested tracing layers, OpenTelemetry spans, and auto-corrective loops in a 3-minute walk-through presentation.
           </p>
         </div>
 
-        {/* Tab Selection Switcher */}
-        <div className="flex justify-center gap-3 mb-8 select-none">
-          <button
-            onClick={() => setActiveTab('video')}
-            className={`px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2 border cursor-pointer ${
-              activeTab === 'video'
-                ? 'bg-brand-primary border-brand-primary text-white shadow-[0_0_20px_rgba(99,102,241,0.4)]'
-                : 'bg-surface-dark border-border-dark text-text-secondary hover:text-white hover:bg-white/[0.04]'
-            }`}
-          >
-            <Play size={14} className={activeTab === 'video' ? 'fill-white' : ''} />
-            <span>Video Walkthrough</span>
-          </button>
-          <button
-            onClick={() => setActiveTab('simulation')}
-            className={`px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2 border cursor-pointer ${
-              activeTab === 'simulation'
-                ? 'bg-brand-primary border-brand-primary text-white shadow-[0_0_20px_rgba(99,102,241,0.4)]'
-                : 'bg-surface-dark border-border-dark text-text-secondary hover:text-white hover:bg-white/[0.04]'
-            }`}
-          >
-            <Cpu size={14} />
-            <span>Interactive Simulator</span>
-          </button>
-        </div>
-
         {/* Dynamic Video Mockup Player */}
-        <div className="bg-[#0B0D11] border border-border-dark rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.8)] relative">
+        <div className="bg-[#0B0D11] border border-border-dark rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.8)] relative max-w-4xl mx-auto">
           
           {/* Top Window chrome */}
           <div className="h-10 border-b border-border-dark bg-[#07090C] flex items-center px-4 gap-2">
@@ -368,396 +270,78 @@ export function DemoVideoSection() {
             <div className="w-3 h-3 rounded-full bg-brand-secondary/80" />
             <div className="mx-auto flex-1 text-center">
               <span className="bg-border-dark py-1 px-4 rounded text-xs text-text-muted font-mono select-none">
-                {activeTab === 'video' ? 'youtube.com/watch?v=vUG2pjiF880' : 'phantos-ai.com/simulation-replay.mov'}
+                youtube.com/watch?v=vUG2pjiF880
               </span>
             </div>
           </div>
 
           {/* Player Viewport */}
-          {activeTab === 'video' ? (
-            /* VIDEO TAB VIEW */
-            <div className="relative aspect-video w-full bg-black">
-              {!hasPlayedVideo ? (
-                /* Cinematic Preview Facade with Glowing Play Button and Blur */
-                <div 
-                  onClick={() => setHasPlayedVideo(true)}
-                  className="absolute inset-0 w-full h-full cursor-pointer flex flex-col items-center justify-center overflow-hidden group/video-facade"
-                >
-                  {/* YouTube Thumbnail Background with subtle blend/blur */}
-                  <img
-                    src="https://img.youtube.com/vi/vUG2pjiF880/maxresdefault.jpg"
-                    alt="Phantos AI Demo Video Thumbnail"
-                    referrerPolicy="no-referrer"
-                    className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover/video-facade:scale-[1.02] transition-transform duration-700 blur-[2px]"
-                  />
-                  
-                  {/* Backdrop dark gradient & glow overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-black/60 z-10" />
-                  <div className="absolute inset-0 bg-brand-primary/10 mix-blend-color z-10" />
-                  
-                  {/* Glowing centered play button and text */}
-                  <div className="relative z-20 flex flex-col items-center gap-6 p-4 text-center">
-                    <div className="w-20 h-20 rounded-full bg-brand-primary flex items-center justify-center text-white shadow-[0_0_40px_rgba(99,102,241,0.8)] border-2 border-white/30 group-hover/video-facade:scale-110 group-hover/video-facade:shadow-[0_0_60px_rgba(99,102,241,1.0)] transition-all duration-300">
-                      <Play size={34} className="ml-1.5 fill-white text-white" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg md:text-2xl font-bold text-white tracking-tight mb-2 drop-shadow-md">
-                        Phantos AI Demo Video Walkthrough
-                      </h3>
-                      <p className="text-xs md:text-sm text-text-secondary max-w-md mx-auto leading-relaxed drop-shadow-sm px-4">
-                        Watch how Phantos AI monitors itself, identifies failures, and hot-patches its system instructions autonomously.
-                      </p>
-                    </div>
-                    <span className="px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[10px] font-mono tracking-widest uppercase font-semibold text-[#A5B4FC]">
-                      🎬 CLICK TO LAUNCH VIDEO • PLAY DEMO
-                    </span>
-                  </div>
-                </div>
-              ) : (
-                /* Authentically embedded high quality YouTube video */
-                <iframe
-                  width="100%"
-                  height="100%"
-                  src="https://www.youtube.com/embed/vUG2pjiF880?autoplay=1&rel=0&modestbranding=1"
-                  title="Phantos AI Demo Video Presentation"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                  className="absolute inset-0 w-full h-full border-0 shadow-2xl"
-                ></iframe>
-              )}
-            </div>
-          ) : (
-            /* SIMULATION TAB VIEW (SPLIT SCREEN) */
-            <div className="flex flex-col lg:flex-row divide-y lg:divide-y-0 lg:divide-x divide-border-dark min-h-[480px]">
-              
-              {/* LEFT COLUMN: Animated Screen Output */}
+          <div className="relative aspect-video w-full bg-black">
+            {!hasPlayedVideo ? (
+              /* Cinematic Preview Facade with Glowing Play Button and Blur */
               <div 
-                onClick={() => setIsPlaying(!isPlaying)}
-                className="flex-1 bg-black/45 p-6 md:p-8 flex flex-col justify-between relative overflow-hidden group/screen min-h-[380px] cursor-pointer"
+                onClick={() => setHasPlayedVideo(true)}
+                className="absolute inset-0 w-full h-full cursor-pointer flex flex-col items-center justify-center overflow-hidden group/video-facade"
               >
+                {/* YouTube Thumbnail Background with subtle blend/blur */}
+                <img
+                  src="https://img.youtube.com/vi/vUG2pjiF880/maxresdefault.jpg"
+                  alt="Phantos AI Demo Video Thumbnail"
+                  referrerPolicy="no-referrer"
+                  className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover/video-facade:scale-[1.02] transition-transform duration-700 blur-[2px]"
+                />
                 
-                {/* Play / Pause Overlays with Blur */}
-                <div className={`absolute inset-0 z-30 flex items-center justify-center transition-all duration-300 ${isPlaying ? 'opacity-0 pointer-events-none' : 'opacity-100 backdrop-blur-[3px] bg-black/40'}`}>
-                  <div className="flex flex-col items-center gap-3">
-                    <div className="w-16 h-16 rounded-full bg-brand-primary flex items-center justify-center text-white shadow-[0_0_35px_rgba(99,102,241,0.8)] border border-white/25 hover:scale-110 hover:shadow-[0_0_50px_rgba(99,102,241,1.0)] transition-all duration-300">
-                      <Play size={28} className="ml-1 fill-white" />
-                    </div>
-                    <span className="text-xs font-mono font-black uppercase tracking-widest text-[#A5B4FC] drop-shadow-[0_0_8px_rgba(99,102,241,0.5)] select-none">
-                      Click to Custom Simulation Play
-                    </span>
-                  </div>
-                </div>
-
-                {/* Hover Pause Indicator when playing */}
-                {isPlaying && (
-                  <div className="absolute inset-0 z-20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 bg-black/15 backdrop-blur-[1px]">
-                    <div className="w-14 h-14 rounded-full bg-brand-primary/80 flex items-center justify-center text-white shadow-[0_0_20px_rgba(99,102,241,0.5)] border border-white/10 hover:scale-105 transition-all duration-300">
-                      <Pause size={22} className="fill-white" />
-                    </div>
-                  </div>
-                )}
+                {/* Backdrop dark gradient & glow overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-black/60 z-10" />
+                <div className="absolute inset-0 bg-brand-primary/10 mix-blend-color z-10" />
                 
-                {/* Background accent ambient light */}
-                <div className="absolute -top-20 -left-20 w-80 h-80 bg-brand-primary/10 blur-[100px] pointer-events-none" />
-                
-                {/* Screen Header */}
-                <div className="relative z-10 flex justify-between items-center mb-6">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-brand-primary animate-ping" />
-                    <span className="text-[10px] tracking-wider uppercase font-semibold text-brand-primary font-mono select-none">
-                      AUTONOMOUS FEED Replay
-                    </span>
+                {/* Glowing centered play button and text */}
+                <div className="relative z-20 flex flex-col items-center gap-6 p-4 text-center">
+                  <div className="w-20 h-20 rounded-full bg-brand-primary flex items-center justify-center text-white shadow-[0_0_40px_rgba(99,102,241,0.8)] border-2 border-white/30 group-hover/video-facade:scale-110 group-hover/video-facade:shadow-[0_0_60px_rgba(99,102,241,1.0)] transition-all duration-300">
+                    <Play size={34} className="ml-1.5 fill-white text-white" />
                   </div>
-                  <div className="px-3 py-1 rounded-md bg-white/5 border border-white/10 text-[10px] font-mono font-medium text-text-muted select-none">
-                    PHASE: {activeChapter.timestamp} - {formatTime(currentTime)}
+                  <div>
+                    <h3 className="text-lg md:text-2xl font-bold text-white tracking-tight mb-2 drop-shadow-md">
+                      Phantos AI Demo Video Walkthrough
+                    </h3>
+                    <p className="text-xs md:text-sm text-text-secondary max-w-md mx-auto leading-relaxed drop-shadow-sm px-4">
+                      Watch how Phantos AI monitors itself, identifies failures, and hot-patches its system instructions autonomously.
+                    </p>
                   </div>
-                </div>
-
-                {/* Dynamic Scene Content based on Chapter Timeline */}
-                <div className="flex-1 flex flex-col justify-center relative z-10">
-                  {activeChapterIndex === 0 && (
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      className="space-y-4"
-                    >
-                      <div className="border border-border-dark bg-bg-dark/80 p-4 rounded-xl">
-                        <div className="flex items-center gap-2 text-xs text-brand-accent font-semibold mb-2">
-                          <HelpCircle size={14} />
-                          <span>Baseline Customer Request:</span>
-                        </div>
-                        <p className="text-sm font-medium text-text-primary">
-                          &quot;What is your return window/limits for standard customized configure laptops?&quot;
-                        </p>
-                      </div>
-
-                      <div className="border border-brand-danger/20 bg-brand-danger/5 p-4 rounded-xl">
-                        <div className="flex items-center gap-2 text-xs text-brand-danger font-semibold mb-2">
-                          <AlertTriangle size={14} className="animate-bounce" />
-                          <span>Baseline Output (Failing Silently):</span>
-                        </div>
-                        <p className="text-sm text-text-secondary leading-relaxed mb-3">
-                          &quot;Unfortunately we do not support or accept order return policies for any customizable or specialized laptops. All configure sales are completely final.&quot;
-                        </p>
-                        <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-brand-danger/20 text-brand-danger text-[10px] font-bold font-mono tracking-wider uppercase">
-                          ✘ CONTRADICTION DETECTED BY EVALUATOR
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-
-                  {activeChapterIndex === 1 && (
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      className="space-y-4"
-                    >
-                      <div className="border border-border-dark bg-bg-dark/80 p-4 rounded-xl">
-                        <div className="flex items-center justify-between text-xs text-brand-primary font-semibold mb-3">
-                          <div className="flex items-center gap-2">
-                            <Activity size={14} className="animate-pulse" />
-                            <span>OpenTelemetry Nested Trace Spans:</span>
-                          </div>
-                          <span className="font-mono text-[10px] text-text-muted">ID: ph_tr_8f93a1</span>
-                        </div>
-                        
-                        {/* Interactive Traces visualization list */}
-                        <div className="space-y-2 font-mono text-[11px] leading-relaxed">
-                          <div className="flex items-center justify-between p-2 rounded bg-white/5 border border-white/10">
-                            <span className="text-brand-primary">⚙ span: post_chat_query</span>
-                            <span className="text-brand-secondary text-[10px]">100% active (1.2s)</span>
-                          </div>
-                          <div className="flex items-center justify-between p-2 rounded bg-white/5 border border-white/10 ml-4">
-                            <span className="text-brand-accent">├── span: vector_store_doc_docs</span>
-                            <span className="text-text-muted text-[10px]">completed (82ms)</span>
-                          </div>
-                          <div className="flex items-center justify-between p-2 rounded bg-white/5 border border-white/10 ml-4">
-                            <span className="text-indigo-400">├── span: call_gemini_2_0_flash</span>
-                            <span className="text-text-muted text-[10px]">completed (212ms)</span>
-                          </div>
-                          <div className="flex items-center justify-between p-2 rounded bg-white/5 border border-white/10 ml-8">
-                            <span className="text-brand-danger">└── span: contradiction_eval_guard</span>
-                            <span className="text-brand-danger text-[10px] animate-pulse">intercepted (120ms)</span>
-                          </div>
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-
-                  {activeChapterIndex === 2 && (
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      className="space-y-4"
-                    >
-                      <div className="border border-border-dark bg-bg-dark/80 p-5 rounded-xl">
-                        <div className="flex items-center justify-between mb-4">
-                          <div className="flex items-center gap-2 text-xs text-brand-accent font-semibold">
-                            <Cpu size={14} />
-                            <span>Arize Phoenix Evaluator Cognitive Scorecard:</span>
-                          </div>
-                          <span className="px-2 py-0.5 rounded bg-brand-danger/10 text-brand-danger text-[10px] font-bold">FAIL IN EVAL</span>
-                        </div>
-
-                        {/* Score Metrics Grid */}
-                        <div className="grid grid-cols-3 gap-3 mb-4">
-                          <div className="bg-white/5 p-3 rounded-lg border border-white/5 text-center">
-                            <span className="text-[10px] text-text-muted uppercase block mb-1">Accuracy</span>
-                            <span className="text-lg font-black text-brand-danger">41%</span>
-                          </div>
-                          <div className="bg-white/5 p-3 rounded-lg border border-white/5 text-center">
-                            <span className="text-[10px] text-text-muted uppercase block mb-1">Helpfulness</span>
-                            <span className="text-lg font-black text-brand-accent">55%</span>
-                          </div>
-                          <div className="bg-white/5 p-3 rounded-lg border border-white/5 text-center">
-                            <span className="text-[10px] text-text-muted uppercase block mb-1">Contradiction</span>
-                            <span className="text-lg font-black text-brand-danger">100%</span>
-                          </div>
-                        </div>
-
-                        <div className="p-3 bg-white/5 border border-white/10 rounded-lg text-xs font-mono text-text-secondary">
-                          <p className="text-brand-danger mb-1 font-semibold">[CRITICAL DRIFT FOUND]:</p>
-                          <p className="text-[11px] leading-normal">
-                            &quot;Agent generated an incorrect rejection constraint contradicting standard Warranty policies Section 4-B.&quot;
-                          </p>
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-
-                  {activeChapterIndex === 3 && (
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      className="space-y-4"
-                    >
-                      <div className="border border-brand-secondary/30 bg-brand-secondary/5 p-4 rounded-xl">
-                        <div className="flex items-center justify-between text-xs text-brand-secondary font-semibold mb-2">
-                          <div className="flex items-center gap-2">
-                            <ShieldCheck size={14} className="text-brand-secondary" />
-                            <span>Auto-Calibrated Target Ruleset Patch:</span>
-                          </div>
-                          <span className="text-[9px] font-mono text-[#4ade80]">ACTIVE RULE INSTALLED</span>
-                        </div>
-                        <p className="text-xs font-mono text-text-secondary bg-black/40 p-2 rounded border border-border-dark mb-2">
-                          &quot;SYSTEM_PROMPT_PATCH_8F93: Explicitly notify customized configurations standard laptops are returnable within 14 days under a 10% restocking charge.&quot;
-                        </p>
-                      </div>
-
-                      <div className="border border-border-dark bg-bg-dark/80 p-4 rounded-xl">
-                        <div className="flex items-center gap-2 text-xs text-brand-secondary font-semibold mb-2">
-                          <span className="w-1.5 h-1.5 rounded-full bg-brand-secondary" />
-                          <span>Self-Improved Output Result (Verified Successfully):</span>
-                        </div>
-                        <p className="text-sm font-medium text-text-primary mb-3">
-                          &quot;Under our standard corporate Warranty Section 4-B policies, customized laptops can indeed be returned safely within a strict 14-day window. A minor 10% restocking charge is automatically applied.&quot;
-                        </p>
-                        <div className="flex justify-between items-center bg-brand-secondary/10 px-3 py-1.5 rounded border border-brand-secondary/20">
-                          <span className="text-[10px] font-bold text-brand-secondary tracking-widest uppercase">✔ Autonomous Self-Improvement Complete</span>
-                          <span className="text-xs font-mono font-bold text-brand-secondary">PHOENIX QUALITY: 0.89</span>
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </div>
-
-                {/* Status footer for left screen */}
-                <div className="relative z-10 text-[10px] font-mono text-text-muted select-none flex justify-between items-center border-t border-white/5 pt-4 mt-6">
-                  <span className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                    REAL-TIME TRACING PIPELINE FEED
+                  <span className="px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[10px] font-mono tracking-widest uppercase font-semibold text-[#A5B4FC]">
+                    🎬 CLICK TO LAUNCH VIDEO • PLAY DEMO
                   </span>
-                  <span>UUID: samad_8f93a1</span>
                 </div>
               </div>
+            ) : (
+              /* Authentically embedded high quality YouTube video */
+              <iframe
+                width="100%"
+                height="100%"
+                src="https://www.youtube.com/embed/vUG2pjiF880?autoplay=1&rel=0&modestbranding=1"
+                title="Phantos AI Demo Video Presentation"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                className="absolute inset-0 w-full h-full border-0 shadow-2xl"
+              ></iframe>
+            )}
+          </div>
 
-              {/* RIGHT COLUMN: Interactive Playlist / Chapters */}
-              <div className="w-full lg:w-[350px] bg-[#07090C] p-6 flex flex-col justify-between">
-                <div>
-                  <h3 className="text-xs font-mono font-bold text-text-muted tracking-widest uppercase mb-4">
-                    REPLAY STAGE PLAYLIST
-                  </h3>
-                  <div className="space-y-3">
-                    {CHAPTERS.map((chap) => {
-                      const isActive = activeChapter.id === chap.id;
-                      return (
-                        <div
-                          key={chap.id}
-                          onClick={() => selectChapter(chap.start)}
-                          className={`p-3 rounded-xl border transition-all duration-300 cursor-pointer ${
-                            isActive
-                              ? 'bg-brand-primary/10 border-brand-primary shadow-[0_4px_15px_rgba(99,102,241,0.15)] scale-[1.01]'
-                              : 'bg-white/[0.02] border-border-dark hover:border-white/20 hover:bg-white/[0.04]'
-                          }`}
-                        >
-                          <div className="flex justify-between items-start mb-1">
-                            <h4 className={`text-xs font-bold leading-normal transition-colors ${isActive ? 'text-brand-primary' : 'text-text-primary'}`}>
-                              {chap.title}
-                            </h4>
-                            <span className="text-[10px] font-mono font-semibold text-text-muted">
-                              {chap.timestamp}
-                            </span>
-                          </div>
-                          <p className="text-[11px] text-text-secondary leading-normal">
-                            {chap.sub}
-                          </p>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                <div className="pt-6 border-t border-border-dark mt-6 text-center lg:text-left">
-                  <p className="text-[11px] text-text-muted leading-relaxed">
-                    💡 <strong className="text-text-secondary">Interactive Simulation:</strong> Click any of the four stages above to seek immediately into that chapter of the autonomous self-corrector feed.
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* PLAYER CONTROLLER HUD */}
-          {activeTab === 'simulation' ? (
-            <div className="bg-[#07090C] border-t border-border-dark py-4 px-6 flex flex-col sm:flex-row items-center gap-4">
-              
-              {/* Play controls */}
-              <div className="flex items-center gap-4">
-                <button
-                  onClick={() => setIsPlaying(!isPlaying)}
-                  className="w-10 h-10 rounded-full flex items-center justify-center bg-brand-primary text-white hover:scale-105 transition-transform shadow-[0_4px_10px_rgba(99,102,241,0.3)] cursor-pointer"
-                  title={isPlaying ? "Pause Simulator" : "Play Simulator"}
-                >
-                  {isPlaying ? <Pause size={16} /> : <Play size={16} className="ml-0.5" />}
-                </button>
-
-                <button
-                  onClick={() => setCurrentTime(0)}
-                  className="text-text-muted hover:text-text-primary transition-colors cursor-pointer"
-                  title="Restart Replay"
-                >
-                  <RotateCcw size={16} />
-                </button>
-              </div>
-
-              {/* Progress Track Slider */}
-              <div className="flex-1 w-full flex items-center gap-3">
-                <span className="text-xs font-mono font-medium text-text-muted select-none">
-                  {formatTime(currentTime)}
-                </span>
-                <div className="flex-1 relative flex items-center">
-                  <input
-                    type="range"
-                    min="0"
-                    max="24"
-                    step="0.1"
-                    value={currentTime}
-                    onChange={handleProgressChange}
-                    className="w-full accent-brand-primary h-1 bg-border-dark rounded-lg appearance-none cursor-pointer focus:outline-none focus:ring-1 focus:ring-brand-primary"
-                    style={{
-                      background: `linear-gradient(to right, #6366f1 ${((currentTime / 24) * 100).toFixed(2)}%, #1E293B ${((currentTime / 24) * 100).toFixed(2)}%)`
-                    }}
-                  />
-                </div>
-                <span className="text-xs font-mono font-medium text-text-muted select-none">
-                  0:24
-                </span>
-              </div>
-
-              {/* Utility icons */}
-              <div className="flex items-center gap-3 text-text-muted">
-                <button 
-                  onClick={() => setIsMuted(!isMuted)} 
-                  className="hover:text-text-primary transition-colors cursor-pointer"
-                  title={isMuted ? "Unmute" : "Mute Simulation Audio"}
-                >
-                  <Volume2 size={16} className={isMuted ? "opacity-40" : "opacity-100"} />
-                </button>
-                <button 
-                  onClick={() => setCurrentTime(currentTime)} 
-                  className="hover:text-text-primary transition-colors cursor-pointer"
-                  title="Toggle Fullscreen"
-                >
-                  <Maximize size={16} />
-                </button>
-              </div>
-            </div>
-          ) : (
-            <div className="bg-[#07090C] border-t border-border-dark py-4 px-6 flex items-center justify-between font-mono text-[11px] text-text-muted">
-              <span className="flex items-center gap-2 select-none">
-                <span className="w-2 h-2 rounded-full bg-brand-primary animate-pulse" />
-                PLAYING FROM OFFICIAL YOUTUBE STREAM
-              </span>
-              <a 
-                href="https://youtu.be/vUG2pjiF880" 
-                target="_blank" 
-                rel="noreferrer" 
-                className="text-brand-primary hover:underline flex items-center gap-1 cursor-pointer"
-              >
-                Open in YouTube ↗
-              </a>
-            </div>
-          )}
+          <div className="bg-[#07090C] border-t border-border-dark py-4 px-6 flex items-center justify-between font-mono text-[11px] text-text-muted">
+            <span className="flex items-center gap-2 select-none">
+              <span className="w-2 h-2 rounded-full bg-brand-primary animate-pulse" />
+              PLAYING FROM OFFICIAL YOUTUBE STREAM
+            </span>
+            <a 
+              href="https://youtu.be/vUG2pjiF880" 
+              target="_blank" 
+              rel="noreferrer" 
+              className="text-brand-primary hover:underline flex items-center gap-1 cursor-pointer"
+            >
+              Open in YouTube ↗
+            </a>
+          </div>
         </div>
       </div>
     </section>
@@ -805,6 +389,131 @@ export function Architecture() {
           </div>
         </div>
 
+        {/* System Technical Specifications & Deep Dive */}
+        <div className="mt-24 pt-16 border-t border-border-dark">
+          <div className="text-center mb-16">
+            <span className="text-brand-accent text-xs font-bold tracking-widest uppercase mb-4 block">Engine Specifications</span>
+            <h3 className="text-3xl font-bold mb-4 text-white">System Deep-Dive & Execution Details</h3>
+            <p className="max-w-2xl mx-auto text-sm text-text-secondary leading-relaxed">
+              Our fully productionized, reactive stack built to satisfy ultra-low latency constraints and strict authentication boundaries.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            {/* Pillar 1 */}
+            <div className="relative group p-6 rounded-2xl border border-border-dark bg-[#07090C] hover:border-brand-primary/40 transition-all duration-300">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary">
+                  <Terminal size={20} />
+                </div>
+                <h4 className="text-lg font-bold text-white">1. Robust Core Full-Stack Runtime</h4>
+              </div>
+              <p className="text-xs text-text-muted leading-relaxed mb-6">
+                Because cold-starts and credentials security are critical for live enterprise environments, we bypassed Python-based Streamlit in favor of:
+              </p>
+              <div className="space-y-4 text-xs">
+                <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5">
+                  <span className="font-bold text-brand-primary block mb-1">Vite + React 19 (Single Page Application)</span>
+                  <p className="text-text-secondary leading-normal text-[11px]">
+                    Delivers an instant-load front-end experiencing zero lag, running on the latest React core fiber.
+                  </p>
+                </div>
+                <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5">
+                  <span className="font-bold text-brand-primary block mb-1">Express (Node.js)</span>
+                  <p className="text-text-secondary leading-normal text-[11px]">
+                    High-speed back-end serving as a secure proxy to interact with Google Gemini and Arize Phoenix Cloud, keeping your sensitive target API keys (and those of users) completely hidden from browser inspectors.
+                  </p>
+                </div>
+                <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5">
+                  <span className="font-bold text-brand-primary block mb-1">TypeScript (strict mode)</span>
+                  <p className="text-text-secondary leading-normal text-[11px]">
+                    Controls end-to-end tracing payloads, rule structures, and metric calculations with absolute type safety.
+                  </p>
+                </div>
+                <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5">
+                  <span className="font-bold text-brand-primary block mb-1">TSX & Esbuild</span>
+                  <p className="text-text-secondary leading-normal text-[11px]">
+                    Configured to compile the backend into a modular standalone file to minimize disk space and keep cold-boot latency below 50ms.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Pillar 2 */}
+            <div className="relative group p-6 rounded-2xl border border-border-dark bg-[#07090C] hover:border-brand-accent/40 transition-all duration-300">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-xl bg-brand-accent/10 flex items-center justify-center text-brand-accent">
+                  <Cpu size={20} />
+                </div>
+                <h4 className="text-lg font-bold text-white">2. High-Fidelity Observability & LLM Integration</h4>
+              </div>
+              <p className="text-xs text-text-muted leading-relaxed mb-6">
+                We replaced standard Python bindings with modern JS/TS Native OpenTelemetry instrumentation:
+              </p>
+              <div className="space-y-4 text-xs">
+                <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5">
+                  <span className="font-bold text-brand-accent block mb-1">@arizeai/phoenix-otel (OpenTelemetry SDK for Node)</span>
+                  <p className="text-text-secondary leading-normal text-[11px]">
+                    Auto-configures the core OpenTelemetry TracerProvider directly within our Express server. It intercepts input/output cycles, wraps them with context tracers, and safely ships the telemetry span stream to the PHANTOS_AI project on Arize Phoenix.
+                  </p>
+                </div>
+                <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5">
+                  <span className="font-bold text-brand-accent block mb-1">@google/genai (Official Next-Gen SDK)</span>
+                  <p className="text-text-secondary leading-normal text-[11px]">
+                    Interacts with Gemini models via Google's modern SDK. It supports strict schema definitions (Type.OBJECT) to enforce deterministic JSON structures for our Judge Evaluator and Pattern Detector.
+                  </p>
+                </div>
+                <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5">
+                  <span className="font-bold text-brand-accent block mb-1">Stateful Hybrid Cache Management</span>
+                  <p className="text-text-secondary leading-normal text-[11px]">
+                    Employs an intelligent dual-synchronization layer using regional browser client storage. This maintains historical telemetry traces, metrics, learning loops, and active rules intact even when backend containers are recycled or deployed serverless.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Pillar 3 */}
+            <div className="relative group p-6 rounded-2xl border border-border-dark bg-[#07090C] hover:border-brand-secondary/40 transition-all duration-300">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-xl bg-brand-secondary/10 flex items-center justify-center text-brand-secondary">
+                  <Layers size={20} />
+                </div>
+                <h4 className="text-lg font-bold text-white">3. Beautiful Editorial Design & Fluid Interactions</h4>
+              </div>
+              <p className="text-xs text-text-muted leading-relaxed mb-6">
+                To elevate this solution far beyond standard visual presets, we introduced a bespoke visual language:
+              </p>
+              <div className="space-y-4 text-xs">
+                <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5">
+                  <span className="font-bold text-brand-secondary block mb-1">Tailwind CSS (Vite v4 Integration)</span>
+                  <p className="text-text-secondary leading-normal text-[11px]">
+                    Implements our distinctive theme. It uses deep muted slates, precise negative space, and modern grid systems.
+                  </p>
+                </div>
+                <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5">
+                  <span className="font-bold text-brand-secondary block mb-1">Recharts</span>
+                  <p className="text-text-secondary leading-normal text-[11px]">
+                    Orchestrates the telemetry graphics, mapping historical overall trace performance, dimensional averages (Accuracy, Helpfulness, Completeness, Honesty), and self-correction event timelines.
+                  </p>
+                </div>
+                <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5">
+                  <span className="font-bold text-brand-secondary block mb-1">Framer Motion (motion/react)</span>
+                  <p className="text-text-secondary leading-normal text-[11px]">
+                    Drives smooth layout transitions, micro-responses on interactive cards, sliding drawer reviews, and staggered entrants when adding new dynamic rules.
+                  </p>
+                </div>
+                <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5">
+                  <span className="font-bold text-brand-secondary block mb-1">Lucide React</span>
+                  <p className="text-text-secondary leading-normal text-[11px]">
+                    Supplies clean, standardized visual icons for node tracking, status gauges, policy breaches, and database sync processes.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
 
       </div>
     </section>
@@ -821,19 +530,19 @@ function ArchCard({ text, glow = "border-border-dark bg-[#0A0A0F]/80 text-text-s
 
 export function TechStack() {
   const techList = [
-    { name: "Google Cloud", icon: "☁️" },
-    { name: "Gemini 2.0 Flash", icon: "🤖" },
-    { name: "Arize Phoenix", icon: "🔍" },
-    { name: "Google ADK", icon: "🛠️" },
-    { name: "OpenInference", icon: "⚡" },
-    { name: "FastAPI", icon: "🐍" },
-    { name: "Streamlit", icon: "👑" },
-    { name: "Python", icon: "🐍" }
+    { name: "Vite + React 19", icon: "⚛️" },
+    { name: "Express (Node.js)", icon: "🟢" },
+    { name: "TypeScript (Strict)", icon: "🟦" },
+    { name: "Google GenAI SDK", icon: "🤖" },
+    { name: "Arize Phoenix OTel", icon: "🔍" },
+    { name: "Tailwind CSS", icon: "🎨" },
+    { name: "Recharts Library", icon: "📊" },
+    { name: "Framer Motion", icon: "✨" }
   ];
 
   return (
     <section id="built-with" className="py-24 relative border-y border-border-dark">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center font-sans">
         <h2 className="text-3xl font-bold mb-12">Powered By The Best</h2>
         
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto">
